@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Bookoid</string>
+
+    <string name="fragment_my_books__title">My books</string>
+    <string name="fragment_my_books__list_is_empty">No books</string>
+    <string name="fragment_my_books__db_error">DB Error: [%1$s] Please restart the app</string>
+    <string name="fragment_my_books__fab_description">Add a book</string>
+
+
+
+</resources>
