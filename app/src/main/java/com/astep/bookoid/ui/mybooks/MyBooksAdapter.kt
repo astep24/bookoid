@@ -1,10 +1,7 @@
-package com.skillbox.lesson20myself
+package com.astep.bookoid.ui.mybooks
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.astep.bookoid.R
@@ -37,15 +34,9 @@ class MyBooksAdapter(
     }
 
     class Holder(
-        val binding: ItemOfMyBooksListBinding,
-        onItemClicked: (position: Int) -> Unit
+        private val binding: ItemOfMyBooksListBinding,
+        private val onItemClicked: (position: Int) -> Unit
     ): RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                onItemClicked(absoluteAdapterPosition)
-            }
-        }
-
         fun bind(book: MyBook) {
             Glide.with(this.itemView)
                 .load(book.imageSource)
@@ -55,6 +46,9 @@ class MyBooksAdapter(
 
             binding.bookTitle.text = book.title
             binding.bookDescription.text = book.description.orEmpty()
+            binding.root.setOnClickListener {
+                onItemClicked(absoluteAdapterPosition)
+            }
         }
     }
 }
