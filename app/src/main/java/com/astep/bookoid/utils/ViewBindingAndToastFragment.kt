@@ -9,6 +9,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
+// Если ты не планируешь создавать объекты класса, то всегда нужно закрывать класс.
+// К примеру этот класс нужен только как родитель для другим фрагментов, поэтому
+// его нужно сделать abstract.
 abstract class ViewBindingAndToastFragment<T : ViewBinding>(
     private val inflateMethod: (LayoutInflater, ViewGroup?, Boolean) -> T
 ) : Fragment() {

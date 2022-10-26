@@ -1,19 +1,25 @@
 package com.astep.bookoid.ui.mybooks
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.astep.bookoid.R
 import com.astep.bookoid.data_classes.MyBook
 import com.astep.bookoid.repositories.MyBooksRepository
 import com.astep.bookoid.sealed_classes.DBOutcome
-import com.astep.bookoid.utils.ResourcesUtils
 import kotlinx.coroutines.launch
 
-class MyBooksViewModel : ViewModel() {
-
-    private val repository = MyBooksRepository()
+// Если нужны ресурсы - можно поменять на AndroidViewModel, тогда будет доступен application.
+// Потому что во view model мы можем использовать только context приложения (без утечек).
+class MyBooksViewModel(
+    app: Application,
+    // Зависимости нужно всегда стараться передать через конструктор.
+    // Таким образом их можно подменить позднее в целях тестирования.
+    // Почитай про SOLID принципы.
+    private val repository: MyBooksRepository
+) : AndroidViewModel(app) {
 
     private var booksList: List<MyBook>? = null
 
@@ -23,12 +29,10 @@ class MyBooksViewModel : ViewModel() {
 
     var isFilterOn: Boolean = false
 
-    val gridSpanCount: Int
-        get() = ResourcesUtils.getIntResource(R.integer.fragment_my_books__grid_span_count)
+    val gridSpanCount: Int = app.resources.getInteger(R.integer.fragment_my_books__grid_span_count)
 
     private val _booksListDBResult = MutableLiveData<DBOutcome<List<MyBook>>>()
     val booksListDBResult: LiveData<DBOutcome<List<MyBook>>> = _booksListDBResult
-
 
     fun requestForMyBooks(
         searchValue: String?,
@@ -40,7 +44,12 @@ class MyBooksViewModel : ViewModel() {
                     booksList = (it as? DBOutcome.Success)?.data
                     _booksListDBResult.postValue(it)
                 }
-        } else _booksListDBResult.postValue(DBOutcome.Success(booksList.orEmpty()))
+        } else {
+            _booksListDBResult.postValue(DBOutcome.Success(booksList.orEmpty()))
+        }
     }
 
+    fun onItemClicked(book: MyBook) {
+        // TODO: open another screen
+    }
 }
