@@ -9,17 +9,19 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-open class ViewBindingAndToastFragment<T : ViewBinding>(
-    private val inflateMethod : (LayoutInflater, ViewGroup?, Boolean) -> T
+// Если ты не планируешь создавать объекты класса, то всегда нужно закрывать класс.
+// К примеру этот класс нужен только как родитель для другим фрагментов, поэтому
+// его нужно сделать abstract.
+abstract class ViewBindingAndToastFragment<T : ViewBinding>(
+    private val inflateMethod: (LayoutInflater, ViewGroup?, Boolean) -> T
 ) : Fragment() {
 
     private var _binding: T? = null
-    val binding get() = _binding!!
+    val binding
+        get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = inflateMethod(inflater, container, false)
         return binding.root
