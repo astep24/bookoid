@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.astep.bookoid.R
-import com.astep.bookoid.data_classes.MyBook
-import com.astep.bookoid.repositories.MyBooksRepository
-import com.astep.bookoid.sealed_classes.DBOutcome
+import com.astep.bookoid.domain.MyBook
+import com.astep.bookoid.domain.DataOutcomeState
+import com.astep.bookoid.domain.MyBooksRepository
 import kotlinx.coroutines.launch
 
 // Если нужны ресурсы - можно поменять на AndroidViewModel, тогда будет доступен application.
@@ -31,8 +31,8 @@ class MyBooksViewModel(
 
     val gridSpanCount: Int = app.resources.getInteger(R.integer.fragment_my_books__grid_span_count)
 
-    private val _booksListDBResult = MutableLiveData<DBOutcome<List<MyBook>>>()
-    val booksListDBResult: LiveData<DBOutcome<List<MyBook>>> = _booksListDBResult
+    private val _booksListDBResult = MutableLiveData<DataOutcomeState<List<MyBook>>>()
+    val booksListDBResult: LiveData<DataOutcomeState<List<MyBook>>> = _booksListDBResult
 
     fun requestForMyBooks(
         searchValue: String?,
@@ -41,11 +41,11 @@ class MyBooksViewModel(
         if (forceRequest || booksList == null) {
             repository.getMyBooks(searchValue.orEmpty())
                 .collect {
-                    booksList = (it as? DBOutcome.Success)?.data
+                    booksList = (it as? DataOutcomeState.Success)?.data
                     _booksListDBResult.postValue(it)
                 }
         } else {
-            _booksListDBResult.postValue(DBOutcome.Success(booksList.orEmpty()))
+            _booksListDBResult.postValue(DataOutcomeState.Success(booksList.orEmpty()))
         }
     }
 

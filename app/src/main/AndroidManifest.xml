@@ -4,7 +4,7 @@
     package="com.astep.bookoid">
 
     <application
-        android:name="com.astep.bookoid.AppBookoid"
+        android:name="com.astep.bookoid.ui.AppBookoid"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Bookoid"
         tools:targetApi="31">
         <activity
-            android:name="com.astep.bookoid.MainActivity"
+            android:name="com.astep.bookoid.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

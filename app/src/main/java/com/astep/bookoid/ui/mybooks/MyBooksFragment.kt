@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.astep.bookoid.R
 import com.astep.bookoid.databinding.FragmentMyBooksBinding
-import com.astep.bookoid.repositories.MyBooksRepository
-import com.astep.bookoid.sealed_classes.DBOutcome
+import com.astep.bookoid.data.MyBooksRepositoryImpl
+import com.astep.bookoid.domain.DataOutcomeState
 import com.astep.bookoid.utils.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class MyBooksFragment : ViewBindingAndToastFragment<FragmentMyBooksBinding>(
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return MyBooksViewModel(
                     requireActivity().application,
-                    MyBooksRepository()
+                    MyBooksRepositoryImpl()
                 ) as T
             }
         }
@@ -135,16 +135,16 @@ class MyBooksFragment : ViewBindingAndToastFragment<FragmentMyBooksBinding>(
     private fun initLiveDataObserves() {
         viewModel.booksListDBResult.observe(viewLifecycleOwner) {
             when (it) {
-                is DBOutcome.Progress -> {
+                is DataOutcomeState.Progress -> {
                     setViews(VisibleViewOption.PROGRESS_BAR)
                 }
-                is DBOutcome.Failure -> {
+                is DataOutcomeState.Failure -> {
                     setViews(
                         VisibleViewOption.NICE_MESSAGE,
                         getString(R.string.fragment_my_books__db_error, it.e.toString())
                     )
                 }
-                is DBOutcome.Success -> {
+                is DataOutcomeState.Success -> {
                     if (it.data.isEmpty()) {
                         setViews(
                             VisibleViewOption.NICE_MESSAGE,

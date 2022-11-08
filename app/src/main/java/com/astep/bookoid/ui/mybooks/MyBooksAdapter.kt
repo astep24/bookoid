@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.astep.bookoid.R
-import com.astep.bookoid.data_classes.MyBook
+import com.astep.bookoid.domain.MyBook
 import com.astep.bookoid.databinding.ItemOfMyBooksListBinding
 import com.bumptech.glide.Glide
 

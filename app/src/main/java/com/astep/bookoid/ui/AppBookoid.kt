@@ -1,4 +1,4 @@
-package com.astep.bookoid
+package com.astep.bookoid.ui
 
 import android.app.Application
 import com.astep.bookoid.utils.ResourcesUtils

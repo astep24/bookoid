@@ -1,23 +1,23 @@
-package com.astep.bookoid.repositories
+package com.astep.bookoid.data
 
-import com.astep.bookoid.data_classes.MyBook
-import com.astep.bookoid.sealed_classes.DBOutcome
-import com.astep.bookoid.utils.DebugLogger
+import com.astep.bookoid.domain.MyBook
+import com.astep.bookoid.domain.MyBooksRepository
+import com.astep.bookoid.domain.DataOutcomeState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlin.random.Random
 
-class MyBooksRepository {
+class MyBooksRepositoryImpl: MyBooksRepository {
 
-    suspend fun getMyBooks(searchValue: String): Flow<DBOutcome<List<MyBook>>> = flow {
+    override suspend fun getMyBooks(searchValue: String): Flow<DataOutcomeState<List<MyBook>>> = flow {
 
         // TODO: fetch from database
 
-        emit(DBOutcome.Progress())
+        emit(DataOutcomeState.Progress())
         delay(5000)
 
-        if (Random.nextInt(10) == 2) emit(DBOutcome.Failure(Error("DB failure"))) else
+        if (Random.nextInt(10) == 2) emit(DataOutcomeState.Failure(Error("DB failure"))) else
             listOf(
                 MyBook("https://covers.openlibrary.org/b/isbn/0393955524-M.jpg", "abc", "cde"),
                 MyBook("https://covers.openlibrary.org/b/isbn/1783440899-M.jpg", "efg", "ghi"),
@@ -35,7 +35,7 @@ class MyBooksRepository {
                             it.description?.contains(searchValue.trim(), ignoreCase = true)?:false
                 }
                 .let {
-                    emit(DBOutcome.Success(it))
+                    emit(DataOutcomeState.Success(it))
                 }
     }
 //        .onStart {
@@ -50,7 +50,7 @@ class MyBooksRepository {
 //            }
 //            DebugLogger.d(msg = msg)
 //        }
-        .catch { emit(DBOutcome.Failure(it)) }
+        .catch { emit(DataOutcomeState.Failure(it)) }
         .flowOn(Dispatchers.IO)
 
 }
