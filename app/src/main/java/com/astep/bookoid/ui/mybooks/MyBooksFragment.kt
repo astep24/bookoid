@@ -17,6 +17,7 @@ import com.astep.bookoid.databinding.FragmentMyBooksBinding
 import com.astep.bookoid.data.MyBooksRepositoryImpl
 import com.astep.bookoid.domain.DataOutcomeState
 import com.astep.bookoid.utils.*
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -99,6 +100,7 @@ class MyBooksFragment : ViewBindingFragment<FragmentMyBooksBinding>(
     
     private fun initList() {
         booksAdapter = MyBooksAdapter(viewModel::onItemClicked)
+        booksAdapter?.setPresentationState(selectPresentationState())
         with(binding.booksList) {
             adapter = booksAdapter
             layoutManager = selectLayoutManager()
@@ -112,6 +114,7 @@ class MyBooksFragment : ViewBindingFragment<FragmentMyBooksBinding>(
         }
     }
     
+    @OptIn(FlowPreview::class)
     private fun initSearchViewFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             val searchMenuItem = binding.toolbar.menu.findItem(R.id.menu_toolbar_my_books__search)
@@ -179,20 +182,29 @@ class MyBooksFragment : ViewBindingFragment<FragmentMyBooksBinding>(
     
     private fun onGridIconClicked(menuItem: MenuItem) {
         if (viewModel.isGridOn) {
-            menuItem.setColorOff(requireContext())
             viewModel.isGridOn = false
+            menuItem.setColorOff(requireContext())
         } else {
-            menuItem.setColorOn(requireContext())
             viewModel.isGridOn = true
+            menuItem.setColorOn(requireContext())
         }
+        booksAdapter?.setPresentationState(selectPresentationState())
         binding.booksList.layoutManager = selectLayoutManager()
     }
     
-    private fun selectLayoutManager(): LayoutManager = if (viewModel.isGridOn) {
-        GridLayoutManager(context, viewModel.gridSpanCount)
-    } else {
-        LinearLayoutManager(context)
-    }
+    private fun selectPresentationState(): MyBooksAdapter.PresentationState =
+        if (viewModel.isGridOn) {
+            MyBooksAdapter.PresentationState.GRID_PRESENTATION_STATE
+        } else {
+            MyBooksAdapter.PresentationState.LINEAR_PRESENTATION_STATE
+        }
+    
+    private fun selectLayoutManager(): LayoutManager =
+        if (viewModel.isGridOn) {
+            GridLayoutManager(context, viewModel.gridSpanCount)
+        } else {
+            LinearLayoutManager(context)
+        }
     
     private fun setViews(
         visibleView: VisibleViewOption, niceMessage: String = ""
