@@ -6,6 +6,8 @@
     <string name="fragment_my_books__db_error">DB Error: [%1$s] Please restart the app</string>
     <string name="fragment_my_books__fab_description">Add a book</string>
 
+    <string name="item_of_my_books__book_cover_content_description">Book cover</string>
+
 
 
 </resources>

@@ -12,7 +12,7 @@ import com.astep.bookoid.domain.MyBooksRepository
 import kotlinx.coroutines.launch
 
 class MyBooksViewModel(
-    app: Application,
+    private val app: Application,
     private val repository: MyBooksRepository
 ) : AndroidViewModel(app) {
     
@@ -24,7 +24,8 @@ class MyBooksViewModel(
     
     var isFilterOn: Boolean = false
     
-    val gridSpanCount: Int = app.resources.getInteger(R.integer.fragment_my_books__grid_span_count)
+    val gridSpanCount: Int
+        get() = app.resources.getInteger(R.integer.fragment_my_books__grid_span_count)
     
     private val _booksListDBResult = MutableLiveData<DataOutcomeState<List<MyBook>>>()
     val booksListDBResult: LiveData<DataOutcomeState<List<MyBook>>> = _booksListDBResult

@@ -21,51 +21,61 @@ class MyBooksRepositoryImpl : MyBooksRepository {
             if (Random.nextInt(10) == 2) emit(DataOutcomeState.Failure(Error("DB failure"))) else
                 listOf(
                     MyBook(
+                        0L,
                         "https://covers.openlibrary.org/b/isbn/0393955524-M.jpg",
-                        "abc",
+                        "abc abc abc abc abc",
                         "cde"
                     ),
                     MyBook(
+                        1L,
                         "https://covers.openlibrary.org/b/isbn/1783440899-M.jpg",
                         "efg",
                         "ghi"
                     ),
                     MyBook(
+                        2L,
                         "https://covers.openlibrary.org/b/isbn/9781783440894-M.jpg",
                         "ikl",
                         "lmna"
                     ),
                     MyBook(
+                        3L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "opqa",
                         null
                     ),
                     MyBook(
+                        4L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "qrsb",
                         null
                     ),
                     MyBook(
+                        5L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "tuvc",
                         null
                     ),
                     MyBook(
+                        6L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "vwx",
                         "xyzd"
                     ),
                     MyBook(
+                        7L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "Title 8",
                         "Description 8"
                     ),
                     MyBook(
+                        8L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "Title 9",
                         "Description 9"
                     ),
                     MyBook(
+                        9L,
                         "https://covers.openlibrary.org/b/isbn/9780385533225-M.jpg",
                         "Title 10",
                         null
