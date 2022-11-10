@@ -120,7 +120,7 @@ dependencies {
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     // RoomDao
-    def roomDaoVersion = "2.4.2"
+    def roomDaoVersion = "2.4.3"
     implementation "androidx.room:room-runtime:$roomDaoVersion"
     kapt "androidx.room:room-compiler:$roomDaoVersion"
     implementation "androidx.room:room-ktx:$roomDaoVersion"
